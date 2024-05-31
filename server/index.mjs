@@ -1,3 +1,4 @@
+import {} from 'dotenv/config'
 import express from 'express'
 import mongoose from 'mongoose'
 import session from 'express-session'
@@ -7,15 +8,15 @@ import passport from 'passport'
 import MongoStore from 'connect-mongo'
 
 try {
-    console.log(process.env.EMAIL);
-    await mongoose.connect(process.env.MONGO_URI)
-    console.log("Connected to database")
+  console.log(process.env.EMAIL)
+  await mongoose.connect(process.env.MONGO_URI)
+  console.log('Connected to database')
 } catch (error) {
-    console.log(error.message)
+  console.log(error.message)
 }
 
 const app = express()
-app.use(cookieParser("my-secret"))
+app.use(cookieParser('my-secret'))
 app.use(express.json())
 app.use(
   session({
@@ -25,10 +26,10 @@ app.use(
       secure: true,
     },
     saveUninitialized: false,
-    /*store: MongoStore.create({
+    store: MongoStore.create({
       client: mongoose.connection.getClient(),
       dbName: 'ticketsDB',
-    }),*/
+    }),
   })
 )
 app.use(passport.initialize())
@@ -38,10 +39,10 @@ app.use('/auth', authRouter)
 
 const port = process.env.PORT || 3000
 
-app.get("/", (req, res) => {
-    res.send({msg:"Home Page", data:[]})
+app.get('/', (req, res) => {
+  res.send({ msg: 'Home Page', data: [] })
 })
 
 app.listen(port, () => {
-    console.log(`Listening to port:${port}`);
+  console.log(`Listening to port:${port}`)
 })

@@ -11,8 +11,19 @@ router.post(
     failureRedirect: '/login',
   }),
   function (req, res, next) {
-    res.redirect('/login/email/check')
+    res.redirect('/auth/login/email/check')
   }
+)
+router.get('/login/email/check', function (req, res, next) {
+  res.send({msg:"Check your email", data:[]})
+})
+
+router.get(
+  '/login/email/verify',
+  passport.authenticate('magiclink', {
+    successReturnToOrRedirect: '/',
+    failureRedirect: '/auth/login',
+  })
 )
 
 export default router

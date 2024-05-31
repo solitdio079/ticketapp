@@ -16,7 +16,7 @@ passport.use(
       verifyUserAfterToken: true,
     },
     function send(user, token) {
-      var link = 'http://localhost:3000/login/email/verify?token=' + token
+      var link = 'http://localhost:3000/auth/login/email/verify?token=' + token
       var msg = {
         to: user.email,
         from: process.env['EMAIL'],
