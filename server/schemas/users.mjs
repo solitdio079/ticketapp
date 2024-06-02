@@ -18,7 +18,7 @@ const userSchema = new Schema({
         default: false
     },
     isArtist: {
-        type: String,
+        type: Boolean,
         default: false
     },
     phone: {
