@@ -1,5 +1,5 @@
 export default function Admin() {
     return (<>
-        <div>Admin</div>
+        <div>Admin 2</div>
     </>)
 }
