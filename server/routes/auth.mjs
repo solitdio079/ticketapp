@@ -1,8 +1,9 @@
-import { Router } from 'express'
+import express from 'express'
 import passport from 'passport'
 import '../strategies/magic-link.mjs'
 
-const router = Router()
+const router = express.Router()
+router.use(express.json())
 
 router.post(
   '/login/email',
@@ -17,13 +18,13 @@ router.post(
 router.get(
   '/login/email/verify',
   passport.authenticate('magiclink', {
-    successReturnToOrRedirect: '/auth/status',
+    successReturnToOrRedirect: 'http://localhost:5173/admin',
     failureRedirect: '/auth/status',
   })
 )
 router.get("/status", (req, res) => {
-  if (!req.user) return res.send({ msg: "Please Login!", data: null })
-  return res.send({msg:"Logged in with success", data: req.user})
+  if (!req.user) return res.send({ msg: "You are not logged in!", data: null })
+  return res.send({msg:"Logged in with success!", data: [req.user]})
 })
 
 router.post('/logout', function (req, res, next) {

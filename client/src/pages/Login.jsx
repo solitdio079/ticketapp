@@ -6,16 +6,20 @@ export async function action({ request }) {
     const bodyObject = Object.fromEntries(body)
     console.log(bodyObject);
     
-    const response = fetch('http://localhost:3000/auth/login/email', {
+    const response = await fetch('http://localhost:3000/auth/login/email', {
         method: 'POST',
         headers: {
-            'Access-Control-Allow-Origin': 'http://localhost:3000'
+          'Access-Control-Allow-Origin': 'http://localhost:3000',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(bodyObject)
     })
-    const msg = (await response)
-    console.log(msg);
+  const status = await response.json()
+  if (status.msg === 'You are not logged in!')
     return redirect('/')
+  
+  return redirect('/check-email')
+    
 
 }
 

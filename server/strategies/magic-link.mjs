@@ -56,12 +56,20 @@ passport.use(
 
 passport.serializeUser(function (user, cb) {
   process.nextTick(function () {
-    cb(null, { id: user.id, email: user.email, isAdmin: user.isAdmin, isArtist: user.isArtist })
+    console.log("Inside Serializer!");
+    cb(null, { id: user.id, isAdmin: user.isAdmin})
   })
 })
 
 passport.deserializeUser(function (user, cb) {
-  process.nextTick(function () {
-    return cb(null, user)
+  process.nextTick(async function () {
+    console.log("Inside Deseializer");
+    try {
+       const completeUser = await User.findById(user.id)
+       return cb(null, completeUser)
+    } catch (error) {
+       return cb(error.message, null)
+    }
+   
   })
 })
